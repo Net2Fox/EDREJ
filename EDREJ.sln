@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDREJ", "EDREJ\EDREJ.csproj", "{787BD997-3337-4274-A4C8-90A4AA772908}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{787BD997-3337-4274-A4C8-90A4AA772908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{787BD997-3337-4274-A4C8-90A4AA772908}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{787BD997-3337-4274-A4C8-90A4AA772908}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{787BD997-3337-4274-A4C8-90A4AA772908}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {537D5769-AF14-4C56-B6A6-20AC5A183863}
+	EndGlobalSection
+EndGlobal
