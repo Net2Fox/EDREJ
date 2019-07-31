@@ -14,12 +14,14 @@ namespace EDREJ
     {
         string source = "";
         int clicks = 0;
+        //Dictionary Declaration
         Dictionary<string, string> ruseng = new Dictionary<string, string>();
         Dictionary<string, string> engjap = new Dictionary<string, string>();
 
         public Form1()
         {
             InitializeComponent();
+            //Russian letters in English characters
             ruseng.Add("а", "a");
             ruseng.Add("б", "b");
             ruseng.Add("в", "v");
@@ -54,7 +56,7 @@ namespace EDREJ
             ruseng.Add("ю", "yu");
             ruseng.Add("я", "ya");
 
-
+            //Japanese characters
             engjap.Add("a", "あ");
             engjap.Add("i", "い");
             engjap.Add("u", "う");
@@ -101,25 +103,54 @@ namespace EDREJ
             engjap.Add("wa", "わ");
             engjap.Add("wo", "を");
             engjap.Add("n", "ん");
-        }
 
+            engjap.Add("ga", "が");
+            engjap.Add("gi", "ぎ");
+            engjap.Add("gu", "ぐ");
+            engjap.Add("ge", "げ");
+            engjap.Add("go", "ご");
+            engjap.Add("za", "ざ");
+            engjap.Add("zi", "じ");
+            engjap.Add("zu", "ず");
+            engjap.Add("ze", "ぜ");
+            engjap.Add("zo", "ぞ");
+            engjap.Add("da", "だ");
+            engjap.Add("di", "ぢ");
+            engjap.Add("du", "づ");
+            engjap.Add("de", "で");
+            engjap.Add("do", "ど");
+            engjap.Add("ba", "ば");
+            engjap.Add("bi", "び ");
+            engjap.Add("bu", "ぶ");
+            engjap.Add("be", "べ");
+            engjap.Add("bo", "ぼ");
+            engjap.Add("pa", "ぱ");
+            engjap.Add("pi", "ぴ");
+            engjap.Add("pu", "ぷ");
+            engjap.Add("pe", "ぺ");
+            engjap.Add("po", "ぽ");
+        }
+        //Form load events
         async void Form1_Load(object sender, EventArgs e)
         {
+            //Greeting to Char Array
             char[] weltext = "Welcome to EDREJ!".ToCharArray();
-
+            //The effect of typesetting the text
             foreach (char ch in weltext)
             {
                 label1.Text += ch.ToString();
                 await Task.Delay(50);
             }
         }
-
+        //Encrypt
         async void Button1_Click(object sender, EventArgs e)
         {
             try
             {
+                //The clearing of a field of the message
                 label2.Text = "";
                 source = textBox1.Text;
+                //Replace characters
                 foreach (KeyValuePair<string, string> pair in ruseng)
                 {
                     source = source.ToLower().Replace(pair.Key, pair.Value);
@@ -168,38 +199,45 @@ namespace EDREJ
                     source = source.ToLower().Replace("wo", "を");
                     source = source.ToLower().Replace(pair.Key, pair.Value);
                 }
+                //First capital letter
                 source = source.Substring(0, 1).ToUpper() + source.Remove(0, 1);
+                //The effect of typesetting the text
                 char[] tebox = source.ToCharArray();
                 foreach (char ch in tebox)
                 {
                     label2.Text += ch.ToString();
                     await Task.Delay(50);
                 }
+                //Clear the clipboard and enter
                 Clipboard.Clear();
                 Clipboard.SetText(source);
             }
             catch
             {
+                //Error
                 MessageBox.Show("Enter text!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        //Easter egg
         void Label1_Click(object sender, EventArgs e)
         {
             clicks++;
             if(clicks == 3)
             {
-                MessageBox.Show("EDREJ 1.1. \nDeveloper Net2Fox. \nCipher by ZerZru.", "Автор", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("EDREJ 1.1. \nDeveloper Net2Fox. \nCipher by ZerZru.", "Author", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 clicks = 0;
             }
         }
 
+        //Decrypt
         async void Button2_Click(object sender, EventArgs e)
         {
             try
             {
+                //The clearing of a field of the message
                 label2.Text = "";
                 source = textBox1.Text;
+                //Replace characters
                 foreach (KeyValuePair<string, string> pair in engjap)
                 {
                     source = source.ToLower().Replace(pair.Value, pair.Key);
@@ -218,13 +256,16 @@ namespace EDREJ
                     source = source.ToLower().Replace("ya", "я");
                     source = source.ToLower().Replace(pair.Value, pair.Key);
                 }
+                //First capital letter
                 source = source.Substring(0, 1).ToUpper() + source.Remove(0, 1);
+                //The effect of typesetting the text
                 char[] tebox = source.ToCharArray();
                 foreach (char ch in tebox)
                 {
                     label2.Text += ch.ToString();
                     await Task.Delay(50);
                 }
+                //Clear the clipboard and enter
                 Clipboard.Clear();
                 Clipboard.SetText(source);
             }
@@ -233,15 +274,18 @@ namespace EDREJ
                 MessageBox.Show("Enter text!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        //Clean
         async void Button3_Click(object sender, EventArgs e)
         {
+            //Clearing only the textbox
             if (label2.Text == "")
             {
                 CleanTexBox();
             }
-            else if(textBox1.Text == "")
+            //Clear text only
+            else if (textBox1.Text == "")
             {
+                //Text erase effect
                 char[] tebox = source.ToCharArray();
                 for (int i = tebox.Length - 1; i <= tebox.Length & i != 0; i--)
                 {
@@ -254,8 +298,10 @@ namespace EDREJ
                 source = "";
                 label2.Text = "";
             }
+            //Clean all
             else 
             {
+                //Text erase effect
                 char[] tebox = source.ToCharArray();
                 CleanTexBox();
                 for (int i = tebox.Length - 1; i <= tebox.Length & i != 0; i--)
@@ -270,13 +316,14 @@ namespace EDREJ
                 label2.Text = "";
             }
         }
-
+        //Clean textbox
         async void CleanTexBox()
         {
             try
             {
                 await Task.Run(async () =>
                 {
+                    //Text erase effect
                     char[] tebox = textBox1.Text.ToCharArray();
                     for (int i = tebox.Length - 1; i <= tebox.Length & i != 0; i--)
                     {
