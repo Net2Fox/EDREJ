@@ -224,11 +224,10 @@ namespace EDREJ
             clicks++;
             if(clicks == 3)
             {
-                MessageBox.Show("EDREJ 1.1. \nDeveloper Net2Fox. \nCipher by ZerZru.", "Author", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("EDREJ 1.2. \nDeveloper Net2Fox. \nCipher by ZerZru.", "Author", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 clicks = 0;
             }
         }
-
         //Decrypt
         async void Button2_Click(object sender, EventArgs e)
         {
