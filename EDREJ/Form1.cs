@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,8 +13,14 @@ namespace EDREJ
 {
     public partial class Form1 : Form
     {
+        //Registr
+        RegistryKey reg = Registry.CurrentUser;
+        //Input string
         string source = "";
+        //Click count
         int clicks = 0;
+        //Animation type
+        int type_anim = 0;
         //Dictionary Declaration
         Dictionary<string, string> ruseng = new Dictionary<string, string>();
         Dictionary<string, string> engjap = new Dictionary<string, string>();
@@ -130,21 +137,225 @@ namespace EDREJ
             engjap.Add("pe", "ぺ");
             engjap.Add("po", "ぽ");
         }
+
         //Form load events
-        async void Form1_Load(object sender, EventArgs e)
+        void Form1_Load(object sender, EventArgs e)
         {
-            //Greeting to Char Array
-            char[] weltext = "Welcome to EDREJ!".ToCharArray();
-            //The effect of typesetting the text
-            foreach (char ch in weltext)
+            //Trying to read registry data
+            try
             {
-                label1.Text += ch.ToString();
-                await Task.Delay(50);
+                RegistryKey Sett = reg.OpenSubKey("EDREJ", true);
+                type_anim = Convert.ToInt32(Sett.GetValue("Animations"));
+            }
+            catch
+            {
+                RegistryKey Sett = reg.CreateSubKey("EDREJ");
+                Sett.SetValue("Animations", Convert.ToString(type_anim));
+            }
+            //Set the text box color
+            textBox1.BackColor = Color.FromArgb(240, 240, 240);
+            //Check what type of animation
+            if (type_anim == 1)
+            {
+                radioButton2.Checked = true;
+            }
+            //Disabling animations
+            if (type_anim == 3 | type_anim != 0 & type_anim != 1)
+            {
+                button1.Text = "Encrypt";
+                button2.Text = "Decrypt";
+                button3.Text = "Clean";
+                button4.Text = "Settings";
+                label1.Text = "Welcome to EDREJ!";
+                panel2.Location = new Point(12, 248);
+                button4.Location = new Point(12, 5);
+                textBox1.Location = new Point(12, 35);
+                label1.Location = new Point(12, 9);
+                button1.BackColor = Color.FromArgb(220, 220, 220);
+                button2.BackColor = Color.FromArgb(220, 220, 220);
+                button3.BackColor = Color.FromArgb(220, 220, 220);
+                button4.BackColor = Color.FromArgb(220, 220, 220);
+                textBox1.BackColor = Color.FromArgb(255, 255, 255);
+                radioButton3.Checked = true;
+            }
+            else
+            {
+                //Animations for each control
+                Tex1();
+                Anim();
+                But4();
+                Lab1();
             }
         }
+
+        //Animation Buttons
+        async void Anim()
+        {
+            await Task.Run(async () =>
+            {
+                //Check the type of animation
+                if (type_anim == 0)
+                {
+                    panel2.Location = new Point(12, 248);
+                    foreach(Button bt in panel2.Controls)
+                    {
+                        bt.Enabled = false;
+                        for (byte r = 240, g = 240, b = 240; r >= 220 & g >= 220 & b >= 220; r -= 2, g -= 2, b -= 2, await Task.Delay(10))
+                        {
+                            bt.BackColor = Color.FromArgb(r, g, b);
+                        }
+                        if(bt == button1)
+                        {
+                            char[] buttext = "Encrypt".ToCharArray();
+                            foreach (char ch in buttext)
+                            {
+                                bt.Text += ch.ToString();
+                                await Task.Delay(50);
+                            }
+                            bt.Enabled = true;
+                        }
+                        else if(bt == button2)
+                        {
+                            char[] buttext = "Decrypt".ToCharArray();
+                            foreach (char ch in buttext)
+                            {
+                                bt.Text += ch.ToString();
+                                await Task.Delay(50);
+                            }
+                            bt.Enabled = true;
+                        }
+                        else
+                        {
+                            char[] buttext = "Clean".ToCharArray();
+                            foreach (char ch in buttext)
+                            {
+                                bt.Text += ch.ToString();
+                                await Task.Delay(50);
+                            }
+                            bt.Enabled = true;
+                        }
+                        
+                    }
+                }
+                else if(type_anim == 1)
+                {
+                    button1.Text = "Encrypt";
+                    button2.Text = "Decrypt";
+                    button3.Text = "Clean";
+                    foreach (Button bt in panel2.Controls)
+                    {
+                        bt.Enabled = false;
+                        bt.BackColor = Color.FromArgb(220, 220, 220);
+                        bt.Enabled = true;
+                    }
+                    for (int y = panel2.Location.Y; y > 248; y -= 2, await Task.Delay(10))
+                    {
+                        panel2.Location = new Point(12, y);
+                    }
+                    panel2.Location = new Point(12, 248);
+                }
+            });
+        }
+        
+        //Animation Button 4
+        async void But4()
+        {
+            await Task.Run(async () =>
+            {
+                button4.Enabled = false;
+                //Check the type of animation
+                if (type_anim == 0)
+                {
+                    button4.Location = new Point(12, 5);
+                    for (byte r = 240, g = 240, b = 240; r >= 220 & g >= 220 & b >= 220; r -= 2, g -= 2, b -= 2, await Task.Delay(50))
+                    {
+                        button4.BackColor = Color.FromArgb(r, g, b);
+                    }
+                    //Text animation
+                    char[] buttext = "Settings".ToCharArray();
+                    foreach (char ch in buttext)
+                    {
+                        button4.Text += ch.ToString();
+                        await Task.Delay(50);
+                    }
+                }
+                else if (type_anim == 1)
+                {
+                    button4.Text = "Settings";
+                    button4.BackColor = Color.FromArgb(220, 220, 220);
+                    for (int y = button4.Location.Y; y < 5; y += 1, await Task.Delay(10))
+                    {
+                        button4.Location = new Point(12, y);
+                    }
+                    button4.Location = new Point(12, 5);
+                }
+                button4.Enabled = true;
+            });
+        }
+
+        //Animation TextBox1
+        async void Tex1()
+        {
+            await Task.Run(async () =>
+            {
+                textBox1.Enabled = false;
+                //Check the type of animation
+                if (type_anim == 0)
+                {
+                    textBox1.Location = new Point(12, 35);
+                    for (byte r = 240, g = 240, b = 240; r <= 253 & g <= 253 & b <= 253; r += 2, g += 2, b += 2, await Task.Delay(100))
+                    {
+                        textBox1.BackColor = Color.FromArgb(r, g, b);
+                    }
+                    textBox1.BackColor = Color.FromArgb(255, 255, 255);
+                }
+                else if (type_anim == 1)
+                {
+                    textBox1.BackColor = Color.FromArgb(255, 255, 255);
+                    for (int x = textBox1.Location.X; x > 12; x -= 10, await Task.Delay(10))
+                    {
+                        textBox1.Location = new Point(x, 35);
+                    }
+                    textBox1.Location = new Point(12, 35);
+                }
+                textBox1.Enabled = true;
+            });
+        }
+
+        //Text animation
+        async void Lab1()
+        {
+            await Task.Run(async () =>
+            {
+                if(type_anim == 0)
+                {
+                    label1.Location = new Point(12, 9);
+                    //Greeting to Char Array
+                    char[] weltext = "Welcome to EDREJ!".ToCharArray();
+                    await Task.Delay(500);
+                    //The effect of typesetting the text
+                    foreach (char ch in weltext)
+                    {
+                        label1.Text += ch.ToString();
+                        await Task.Delay(50);
+                    } 
+                }
+                else if(type_anim == 1)
+                {
+                    label1.Text = "Welcome to EDREJ!";
+                    for (int y = label1.Location.Y; y < 9; y += 1, await Task.Delay(5))
+                    {
+                        label1.Location = new Point(12, y);
+                    }
+                    label1.Location = new Point(12, 9);
+                }
+            });
+        }
+
         //Encrypt
         async void Button1_Click(object sender, EventArgs e)
         {
+            button1.Enabled = false;
             try
             {
                 //The clearing of a field of the message
@@ -209,28 +420,20 @@ namespace EDREJ
                     await Task.Delay(50);
                 }
                 //Clear the clipboard and enter
-                Clipboard.Clear();
-                Clipboard.SetText(source);
+                Clipboard.SetDataObject(source);
             }
             catch
             {
                 //Error
                 MessageBox.Show("Enter text!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            button1.Enabled = true;
         }
-        //Easter egg
-        void Label1_Click(object sender, EventArgs e)
-        {
-            clicks++;
-            if(clicks == 3)
-            {
-                MessageBox.Show("EDREJ 1.2. \nDeveloper Net2Fox. \nCipher by ZerZru.", "Author", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                clicks = 0;
-            }
-        }
+
         //Decrypt
         async void Button2_Click(object sender, EventArgs e)
         {
+            button2.Enabled = false;
             try
             {
                 //The clearing of a field of the message
@@ -265,17 +468,19 @@ namespace EDREJ
                     await Task.Delay(50);
                 }
                 //Clear the clipboard and enter
-                Clipboard.Clear();
-                Clipboard.SetText(source);
+                Clipboard.SetDataObject(source);
             }
             catch
             {
                 MessageBox.Show("Enter text!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            button2.Enabled = true;
         }
+
         //Clean
         async void Button3_Click(object sender, EventArgs e)
         {
+            button3.Enabled = false;
             //Clearing only the textbox
             if (label2.Text == "")
             {
@@ -314,7 +519,9 @@ namespace EDREJ
                 source = "";
                 label2.Text = "";
             }
+            button3.Enabled = true;
         }
+
         //Clean textbox
         async void CleanTexBox()
         {
@@ -339,6 +546,63 @@ namespace EDREJ
             {
                 MessageBox.Show("Before you erase the text, you must enter it!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        //Settings
+        async void Button4_Click(object sender, EventArgs e)
+        {
+            if (clicks == 0)
+            {
+                clicks++;
+                button4.Enabled = false;
+                for (int x = panel1.Location.X; x < -4; x += 10, await Task.Delay(5))
+                {
+                    panel1.Location = new Point(x, 73);
+                }
+                panel1.Location = new Point(-4, 73);
+                button4.Enabled = true;
+            }
+            else if (clicks >= 1)
+            {
+                clicks = 0;
+                button4.Enabled = false;
+                for (int x = panel1.Location.X; x > -155; x -= 10, await Task.Delay(5))
+                {
+                    panel1.Location = new Point(x, 73);
+                }
+                panel1.Location = new Point(-155, 73);
+                button4.Enabled = true;
+            }
+        }
+
+        //Easter egg
+        void Form1_DoubleClick(object sender, EventArgs e)
+        {
+            MessageBox.Show("EDREJ 1.3. \nDeveloper Net2Fox. \nCipher by ZerZru.", "Author", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        //Smooth appearance
+        void RadioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            type_anim = 0;
+            RegistryKey Sett = reg.OpenSubKey("EDREJ", true);
+            Sett.SetValue("Animations", Convert.ToString(type_anim));
+        }
+
+        //Smooth extension
+        void RadioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            type_anim = 1;
+            RegistryKey Sett = reg.OpenSubKey("EDREJ", true);
+            Sett.SetValue("Animations", Convert.ToString(type_anim));
+        }
+
+        //Disabling animations
+        void RadioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            type_anim = 3;
+            RegistryKey Sett = reg.OpenSubKey("EDREJ", true);
+            Sett.SetValue("Animations", Convert.ToString(type_anim));
         }
     }
 }
