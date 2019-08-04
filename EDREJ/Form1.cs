@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -168,9 +169,8 @@ namespace EDREJ
                 button4.Text = "Settings";
                 label1.Text = "Welcome to EDREJ!";
                 panel2.Location = new Point(12, 248);
-                button4.Location = new Point(12, 5);
+                panel3.Location = new Point(12, 5);
                 textBox1.Location = new Point(12, 35);
-                label1.Location = new Point(12, 9);
                 button1.BackColor = Color.FromArgb(220, 220, 220);
                 button2.BackColor = Color.FromArgb(220, 220, 220);
                 button3.BackColor = Color.FromArgb(220, 220, 220);
@@ -182,14 +182,13 @@ namespace EDREJ
             {
                 //Animations for each control
                 Tex1();
-                Anim();
-                But4();
-                Lab1();
+                AnimPanel2();
+                AnimPanel3();
             }
         }
 
-        //Animation Buttons
-        async void Anim()
+        //Animation Buttons 1-3
+        async void AnimPanel2()
         {
             await Task.Run(async () =>
             {
@@ -234,7 +233,6 @@ namespace EDREJ
                             }
                             bt.Enabled = true;
                         }
-                        
                     }
                 }
                 else if(type_anim == 1)
@@ -248,7 +246,7 @@ namespace EDREJ
                         bt.BackColor = Color.FromArgb(220, 220, 220);
                         bt.Enabled = true;
                     }
-                    for (int y = panel2.Location.Y; y > 248; y -= 2, await Task.Delay(10))
+                    for (int y = panel2.Location.Y; y > 248; y -= 2, await Task.Delay(1))
                     {
                         panel2.Location = new Point(12, y);
                     }
@@ -256,40 +254,49 @@ namespace EDREJ
                 }
             });
         }
-        
-        //Animation Button 4
-        async void But4()
+
+        //Animation Button4 and Label1
+        async void AnimPanel3()
         {
             await Task.Run(async () =>
             {
-                button4.Enabled = false;
                 //Check the type of animation
                 if (type_anim == 0)
                 {
-                    button4.Location = new Point(12, 5);
-                    for (byte r = 240, g = 240, b = 240; r >= 220 & g >= 220 & b >= 220; r -= 2, g -= 2, b -= 2, await Task.Delay(50))
+                    panel3.Location = new Point(12, 5);
+                    button4.Enabled = false;
+                    for (byte r = 240, g = 240, b = 240; r >= 220 & g >= 220 & b >= 220; r -= 2, g -= 2, b -= 2, await Task.Delay(10))
                     {
                         button4.BackColor = Color.FromArgb(r, g, b);
                     }
-                    //Text animation
                     char[] buttext = "Settings".ToCharArray();
                     foreach (char ch in buttext)
                     {
                         button4.Text += ch.ToString();
                         await Task.Delay(50);
                     }
+                    char[] labtext = "Welcome to EDREJ!".ToCharArray();
+                    foreach (char ch in labtext)
+                    {
+                        label1.Text += ch.ToString();
+                        await Task.Delay(50);
+                    }
+                    button4.Enabled = true;
                 }
                 else if (type_anim == 1)
                 {
+                    label1.Text = "Welcome to EDREJ!";
                     button4.Text = "Settings";
+                    button4.Enabled = false;
                     button4.BackColor = Color.FromArgb(220, 220, 220);
-                    for (int y = button4.Location.Y; y < 5; y += 1, await Task.Delay(10))
+                    button4.Enabled = true;
+                    
+                    for (int y = panel3.Location.Y; y < 5; y += 2, await Task.Delay(1))
                     {
-                        button4.Location = new Point(12, y);
+                        panel3.Location = new Point(12, y);
                     }
-                    button4.Location = new Point(12, 5);
+                    panel3.Location = new Point(12, 5);
                 }
-                button4.Enabled = true;
             });
         }
 
@@ -312,43 +319,13 @@ namespace EDREJ
                 else if (type_anim == 1)
                 {
                     textBox1.BackColor = Color.FromArgb(255, 255, 255);
-                    for (int x = textBox1.Location.X; x > 12; x -= 10, await Task.Delay(10))
+                    for (int x = textBox1.Location.X; x > 12; x -= 20, await Task.Delay(1))
                     {
                         textBox1.Location = new Point(x, 35);
                     }
                     textBox1.Location = new Point(12, 35);
                 }
                 textBox1.Enabled = true;
-            });
-        }
-
-        //Text animation
-        async void Lab1()
-        {
-            await Task.Run(async () =>
-            {
-                if(type_anim == 0)
-                {
-                    label1.Location = new Point(12, 9);
-                    //Greeting to Char Array
-                    char[] weltext = "Welcome to EDREJ!".ToCharArray();
-                    await Task.Delay(500);
-                    //The effect of typesetting the text
-                    foreach (char ch in weltext)
-                    {
-                        label1.Text += ch.ToString();
-                        await Task.Delay(50);
-                    } 
-                }
-                else if(type_anim == 1)
-                {
-                    label1.Text = "Welcome to EDREJ!";
-                    for (int y = label1.Location.Y; y < 9; y += 1, await Task.Delay(5))
-                    {
-                        label1.Location = new Point(12, y);
-                    }
-                    label1.Location = new Point(12, 9);
-                }
             });
         }
 
