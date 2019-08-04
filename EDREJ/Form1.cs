@@ -555,7 +555,7 @@ namespace EDREJ
         //Easter egg
         void Form1_DoubleClick(object sender, EventArgs e)
         {
-            MessageBox.Show("EDREJ 1.3. \nDeveloper Net2Fox. \nCipher by ZerZru.", "Author", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("EDREJ 1.3.1. \nDeveloper Net2Fox. \nCipher by ZerZru.", "Author", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         //Smooth appearance
