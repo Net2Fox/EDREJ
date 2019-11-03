@@ -1,4 +1,7 @@
 ## English
+### WARNING
+VERSIONS OF EDREJ BELOW 1.4 INCLUSIVE ARE NOT RECOMMENDED FOR USE DUE TO ENCRYPTION/DECRYPTION ERRORS! IN THE NEAR FUTURE WILL FIX.
+
 EDREJ - is the encoder, using the [RPB1-Cipher](https://github.com/ZerZru/RPB1-cipher) from [ZerZru](https://github.com/ZerZru).
 If you want to know more about the cipher, go to its repository.
 #### How to use?
@@ -8,6 +11,9 @@ The decrypted/encrypted message is automatically copied to the clipboard so you 
 The master branch contains version [EDREJ 1.3.2](https://github.com/Net2Fox/EDREJ/releases/tag/v1.3.2) and older. The branch also contains a new version [EDREJ 1.4](https://github.com/Net2Fox/EDREJ/releases/tag/v1.4) and newer.
 
 ## Russian
+#### ВНИМАНИЕ
+ВЕРСИИ EDREJ НИЖЕ 1.4 ВКЛЮЧИТЕЛЬНО НЕ РЕКОМЕНДУЮТСЯ К ИСПОЛЬЗОВАНИЮ ИЗ-ЗА ОШИБОК ЗАШИФРОВКИ/РАСШИФРОВКИ! В БЛИЖАЙШЕЕ ВРЕМЯ ВЫЙДЕТ ФИКС.
+
 EDREJ - это шифратор, использующий [RPB1-Cipher](https://github.com/ZerZru/RPB1-cipher) от [ZerZru](https://github.com/ZerZru).
 Если вы хотите узнать про шифр подробнее, то перейдите в его репозиторий. 
 #### Как использовать?
